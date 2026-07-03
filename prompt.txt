@@ -1,0 +1,3 @@
+Hey, I need to create a simple chatbot using the Gemini API key for my project.
+I want to build it locally on my system using Python and then deploy it to GitHub.
+It just needs a basic UI where a user can type a query and get an answer back from Gemini.
