@@ -88,3 +88,5 @@ if user_input := st.chat_input("Ask me anything..."):
             response_placeholder.error(f"Error communicating with Gemini API: {str(e)}")
 
 
+st.divider()
+st.caption("⚡ SimpleExplainer.AI Dashboard Pipeline • Engineered under Streamlit Core Optimization Ecosystem")
