@@ -49,8 +49,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Build Sidebar Architecture
+
 with st.sidebar:
     st.title("📝 Control Panel")
+    if st.button("🔄 Clear App Context Cache", use_container_width=True):
+        st.session_state.messages = []
+        st.rerun()
     st.success("✨ Active Brain Module: Gemini 2.5 Flash")
     st.divider()
     st.info("💡 Project Status: Operational Layer Active")
@@ -70,22 +74,35 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 if user_input := st.chat_input("Ask me anything..."):
+    # 1. Save and display the user's message
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
 
+    # 2. Process assistant response
     with st.chat_message("assistant"):
-        response_placeholder = st.empty()
-        with st.spinner("Streaming response tokens from server..."):
-            import time
-            time.sleep(0.2)
-        try:
-            response = client.models.generate_content(model='gemini-2.5-flash', contents=user_input)
-            bot_response = response.text
-            response_placeholder.markdown(bot_response)
+        # Create the loading container
+        with st.status("SimpleExplainer is thinking...", expanded=True) as status:
+            try:
+                # Call the Gemini API
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=user_input
+                )
+                bot_response = response.text
+                
+                # Automatically complete and collapse the status box
+                status.update(label="Response Generated", state="complete", expanded=False)
+                
+            except Exception as e:
+                status.update(label="Generation Failed", state="error", expanded=True)
+                st.error(f"Error communicating with Gemini API: {str(e)}")
+                bot_response = None
+
+        # 3. Output response text automatically outside the loader box
+        if bot_response:
+            st.markdown(bot_response)
             st.session_state.messages.append({"role": "assistant", "content": bot_response})
-        except Exception as e:
-            response_placeholder.error(f"Error communicating with Gemini API: {str(e)}")
 
 
 st.divider()
