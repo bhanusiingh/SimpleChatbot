@@ -16,12 +16,26 @@ st.markdown("""
 html, body, [class*="css"] { font-family: 'Segoe UI', sans-serif; }
 .main { background: #0e1117; }
 .hero-header {
+    
+    
     padding: 24px;
     border-radius: 16px;
     background: linear-gradient(135deg, #1e3a8a, #5b21b6);
     color: #ffffff;
     margin-bottom: 24px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.stChatMessage {
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 14px;
+    border: 1px solid #262730;
+}
+code {
+    color: #ff79c6 !important;
+    background-color: #1e1e24 !important;
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -63,4 +77,5 @@ if user_input := st.chat_input("Ask me anything..."):
             st.session_state.messages.append({"role": "assistant", "content": bot_response})
         except Exception as e:
             response_placeholder.error(f"Error communicating with Gemini API: {str(e)}")
+
 
