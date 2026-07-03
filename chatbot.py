@@ -54,6 +54,12 @@ with st.sidebar:
     st.success("✨ Active Brain Module: Gemini 2.5 Flash")
     st.divider()
     st.info("💡 Project Status: Operational Layer Active")
+    st.write("### 🧭 Core App Blueprint")
+    st.markdown("""
+    1️⃣ **Input Layer:** Receives text snippets  
+    2️⃣ **API Pipeline:** Direct Gemini flash token routing  
+    3️⃣ **State Engine:** Persistent session mapping  
+    """)
 
 # Initialize state engine trackers
 if "messages" not in st.session_state:
