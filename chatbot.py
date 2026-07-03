@@ -76,6 +76,9 @@ if user_input := st.chat_input("Ask me anything..."):
 
     with st.chat_message("assistant"):
         response_placeholder = st.empty()
+        with st.spinner("Streaming response tokens from server..."):
+            import time
+            time.sleep(0.2)
         try:
             response = client.models.generate_content(model='gemini-2.5-flash', contents=user_input)
             bot_response = response.text
